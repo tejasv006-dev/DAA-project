@@ -14,3 +14,12 @@ class AlignmentResponse(BaseModel):
     seq1: List[str]
     seq2: List[str]
     score: int
+
+class NCBIRequest(BaseModel):
+    gene_name: str
+    organism: str = "Homo sapiens"
+
+class NCBIResponse(BaseModel):
+    seq: str
+    id: str
+    name: str

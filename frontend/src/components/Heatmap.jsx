@@ -27,7 +27,7 @@ export default function Heatmap({ data }) {
     // Color scale mapping 0 to max score
     const maxScore = d3.max(matrix.flat());
     const colorScale = d3.scaleSequential()
-      .interpolator(d3.interpolateHslLong("rgba(30, 41, 59, 1)", "rgba(16, 185, 129, 0.8)"))
+      .interpolator(d3.interpolateViridis)
       .domain([0, maxScore || 1]);
 
     // Draw Matrix Cells
@@ -40,10 +40,10 @@ export default function Heatmap({ data }) {
         cell.append("rect")
           .attr("width", size - 2)
           .attr("height", size - 2)
-          .attr("rx", 4)
+          .attr("rx", 6)
           .attr("fill", isPath ? "var(--path-color)" : colorScale(matrix[i][j]))
-          .attr("stroke", isPath ? "white" : "none")
-          .attr("stroke-width", isPath ? 2 : 0)
+          .attr("stroke", isPath ? "white" : "rgba(255,255,255,0.05)")
+          .attr("stroke-width", isPath ? 2 : 1)
           .style("transition", "all 0.3s ease")
           .on("mouseover", function() {
             d3.select(this).attr("stroke", "white").attr("stroke-width", 2);

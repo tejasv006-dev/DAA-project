@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import AlignmentControl from './components/AlignmentControl';
 import Heatmap from './components/Heatmap';
 import ClinicalSidebar from './components/ClinicalSidebar';
+import SequencePreview from './components/SequencePreview';
 import { Activity } from 'lucide-react';
 import './App.css';
 
@@ -63,11 +64,17 @@ function App() {
       <main style={{ display: 'grid', gridTemplateColumns: 'minmax(300px, 400px) 1fr', gap: '2rem', alignItems: 'start' }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
           <AlignmentControl params={params} setParams={setParams} />
-          <ClinicalSidebar patientSeq={params.patientSeq} refSeq={params.refSeq} />
+          <ClinicalSidebar patientSeq={params.patientSeq} refSeq={params.refSeq} alignmentData={alignmentData} />
         </div>
         
         <div className="glass-panel" style={{ padding: '2rem', minHeight: '600px', display: 'flex', flexDirection: 'column' }}>
-          <h2 style={{ marginBottom: '1.5rem', paddingBottom: '1rem', borderBottom: '1px solid var(--card-border)' }}>Dynamic Programming Matrix</h2>
+          <h2 style={{ marginBottom: '1.5rem', paddingBottom: '1rem', borderBottom: '1px solid var(--card-border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <span>Dynamic Programming Matrix</span>
+            {alignmentData && <span style={{ fontSize: '0.9rem', color: 'var(--accent-primary)' }}>Optimal Score: {alignmentData.score}</span>}
+          </h2>
+          
+          <SequencePreview alignmentData={alignmentData} />
+
           {alignmentData ? (
              <Heatmap data={alignmentData} />
           ) : (
